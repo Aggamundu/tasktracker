@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MaterialIcon } from "@/app/components/taskflow/MaterialIcon";
+import Timeline from "@mui/icons-material/Timeline";
 import { MONTH_SLUGS, monthNavLabel, type MonthSlug } from "@/app/lib/sprints";
 
 export function SprintSideNav({ activeMonth }: { activeMonth: MonthSlug }) {
@@ -11,7 +11,7 @@ export function SprintSideNav({ activeMonth }: { activeMonth: MonthSlug }) {
         </h1>
       </div>
       <div className="text-primary mb-2 flex items-center gap-2 px-3">
-        <MaterialIcon name="calendar_today" className="text-[20px]" />
+        <Timeline sx={{ fontSize: 20, color: "currentColor" }} />
         <span className="font-body-md font-semibold">Timeline</span>
       </div>
       <nav className="custom-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto pr-1">

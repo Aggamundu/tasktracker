@@ -1,4 +1,4 @@
-import { MaterialIcon } from "@/app/components/taskflow/MaterialIcon";
+import Delete from "@mui/icons-material/Delete";
 
 export function DeleteRowButton() {
   return (
@@ -7,7 +7,7 @@ export function DeleteRowButton() {
       className="text-on-surface-variant hover:text-error hover:bg-error-container/20 cursor-pointer rounded-full p-2 opacity-0 transition-colors group-hover:opacity-100"
       aria-label="Delete row"
     >
-      <MaterialIcon name="delete" />
+      <Delete sx={{ fontSize: 22, color: "currentColor" }} />
     </button>
   );
 }

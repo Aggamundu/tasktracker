@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, Inter } from "next/font/google";
+import { MuiAppRegistry } from "@/app/mui-registry";
 import "./globals.css";
 
 const hankenGrotesk = Hanken_Grotesk({
@@ -29,7 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`light ${hankenGrotesk.variable} ${inter.variable} h-full`}>
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <MuiAppRegistry>{children}</MuiAppRegistry>
+      </body>
     </html>
   );
 }

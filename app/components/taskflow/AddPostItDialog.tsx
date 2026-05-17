@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import type { PostItVariant } from "@/app/lib/demo-board-data";
+import type { PostItNote, PostItVariant } from "@/app/lib/demo-board-data";
 
 const variantClass: Record<PostItVariant, string> = {
   yellow: "post-it-yellow",
@@ -11,7 +11,11 @@ const variantClass: Record<PostItVariant, string> = {
 
 type AddPostItDialogProps = {
   open: boolean;
+  mode: "add" | "edit";
+  /** Used when `mode === "add"` and no `initialNote`. */
   defaultVariant: PostItVariant;
+  /** When `mode === "edit"`, pre-fills the form. */
+  initialNote?: Pick<PostItNote, "title" | "description" | "variant"> | null;
   onCancel: () => void;
   onConfirm: (note: {
     title: string;
@@ -22,16 +26,20 @@ type AddPostItDialogProps = {
 
 export function AddPostItDialog({
   open,
+  mode,
   defaultVariant,
+  initialNote,
   onCancel,
   onConfirm,
 }: AddPostItDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const descId = useId();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [variant, setVariant] = useState<PostItVariant>(defaultVariant);
+  const [title, setTitle] = useState(() => initialNote?.title ?? "");
+  const [description, setDescription] = useState(() => initialNote?.description ?? "");
+  const [variant, setVariant] = useState<PostItVariant>(
+    () => initialNote?.variant ?? defaultVariant,
+  );
 
   useEffect(() => {
     const el = dialogRef.current;
@@ -44,6 +52,8 @@ export function AddPostItDialog({
   }, [open]);
 
   const panelClass = `post-it-card ${variantClass[variant]} rounded-lg p-4 text-on-surface-variant min-w-[min(100vw-2rem,360px)] max-w-md shadow-lg`;
+  const heading = mode === "edit" ? "Edit note" : "New note";
+  const submitLabel = mode === "edit" ? "Save changes" : "Add note";
 
   return (
     <dialog
@@ -71,7 +81,7 @@ export function AddPostItDialog({
           }}
         >
           <p className="font-headline-sm text-headline-sm mb-3 font-bold text-on-surface">
-            New note
+            {heading}
           </p>
 
           <div className="mb-3 flex gap-2" role="group" aria-label="Note color">
@@ -133,7 +143,7 @@ export function AddPostItDialog({
               type="submit"
               className="bg-primary-container hover:bg-primary cursor-pointer rounded-lg px-4 py-2 text-body-md font-semibold text-on-primary transition-colors"
             >
-              Add note
+              {submitLabel}
             </button>
           </div>
         </form>

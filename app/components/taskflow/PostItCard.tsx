@@ -1,4 +1,3 @@
-import { MaterialIcon } from "@/app/components/taskflow/MaterialIcon";
 import type { PostItAppearance, PostItVariant } from "@/app/lib/demo-board-data";
 
 const variantClass: Record<PostItVariant, string> = {
@@ -18,7 +17,8 @@ type PostItCardProps = {
   description: string;
   variant: PostItVariant;
   appearance?: PostItAppearance;
-  onAddNote: () => void;
+  isSelected: boolean;
+  onSelect: () => void;
 };
 
 export function PostItCard({
@@ -26,24 +26,25 @@ export function PostItCard({
   description,
   variant,
   appearance = "default",
-  onAddNote,
+  isSelected,
+  onSelect,
 }: PostItCardProps) {
   return (
-    <div className="space-y-1">
-      <div
-        className={`post-it-card ${variantClass[variant]} rounded-lg p-3 text-on-surface-variant min-h-[80px] ${appearanceClass[appearance]}`}
-      >
-        <p className="font-body-md mb-1 font-semibold">{title}</p>
-        <p className="text-body-sm">{description}</p>
-      </div>
-      <button
-        type="button"
-        onClick={onAddNote}
-        className="text-primary hover:bg-surface-container-high flex cursor-pointer items-center gap-1 rounded-md px-1 py-1 text-left text-label-md font-semibold transition-colors"
-      >
-        <MaterialIcon name="add" className="text-[18px]" />
-        Add note
-      </button>
+    <div
+      data-postit-card
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      className={`post-it-card ${variantClass[variant]} relative cursor-pointer rounded-lg p-3 text-on-surface-variant outline-none min-h-[80px] transition-[filter,box-shadow] duration-150 ${appearanceClass[appearance]} ${isSelected ? "brightness-[0.88] ring-2 ring-primary ring-offset-2 ring-offset-background shadow-md" : ""}`}
+    >
+      <p className="font-body-md mb-1 font-semibold">{title}</p>
+      <p className="text-body-sm">{description}</p>
     </div>
   );
 }
