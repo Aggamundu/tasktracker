@@ -9,19 +9,19 @@ export type RoadmapMonthEntry = PlanningMonth & {
 
 /** One row per month in the May→May planning window (aligned to `getPlanningMonths`). */
 const ROADMAP_GOALS: { goal: string; accent: RoadmapAccent }[] = [
-  { goal: "Kickoff & roadmap lock-in", accent: "primary" },
-  { goal: "Core scope & milestones", accent: "primary" },
-  { goal: "Build velocity & integrations", accent: "primary" },
-  { goal: "Performance & reliability pass", accent: "secondary" },
-  { goal: "Security audit & compliance", accent: "secondary" },
-  { goal: "API polish & partner pilots", accent: "secondary" },
-  { goal: "Mobile & expansion slice", accent: "outline" },
-  { goal: "Analytics & insights layer", accent: "outline" },
-  { goal: "Enterprise onboarding flow", accent: "outline" },
-  { goal: "Scalability infrastructure", accent: "outline" },
-  { goal: "Partner ecosystem launch", accent: "outline" },
-  { goal: "Quality hardening & docs", accent: "outline" },
-  { goal: "Year-end vision & next cycle prep", accent: "outline" },
+  { goal: "Define the vision", accent: "primary" },
+  { goal: "Core mechanics prototype", accent: "primary" },
+  { goal: "Multiplayer prototype", accent: "primary" },
+  { goal: "Basic progression", accent: "secondary" },
+  { goal: "Complete core features", accent: "secondary" },
+  { goal: "Complete core features", accent: "secondary" },
+  { goal: "Complete core features", accent: "outline" },
+  { goal: "Complete core features", accent: "outline" },
+  { goal: "Complete core features", accent: "outline" },
+  { goal: "Polish gameplay", accent: "outline" },
+  { goal: "Finalize", accent: "outline" },
+  { goal: "Finalize", accent: "outline" },
+  { goal: "Finalize", accent: "outline" },
 ];
 
 export function getRoadmapMonths(referenceDate: Date = new Date()): RoadmapMonthEntry[] {
