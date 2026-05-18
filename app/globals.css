@@ -124,14 +124,6 @@
 
 .post-it-card {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-
-.post-it-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -145,4 +137,17 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #c3c6d7;
   border-radius: 10px;
+}
+
+@keyframes tasktracker-nav-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.tasktracker-nav-loading-bar {
+  animation: tasktracker-nav-loading 0.85s ease-in-out infinite;
 }

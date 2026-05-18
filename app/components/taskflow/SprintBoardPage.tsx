@@ -1,21 +1,24 @@
-import {
-  KanbanBoardTable,
-  NewStoryRowButton,
-} from "@/app/components/taskflow/KanbanBoardTable";
+import { KanbanBoardTable } from "@/app/components/taskflow/KanbanBoardTable";
 import { SprintBoardHeader } from "@/app/components/taskflow/SprintBoardHeader";
 import { SprintSideNav } from "@/app/components/taskflow/SprintSideNav";
-import { DEMO_BOARD_ROWS } from "@/app/lib/demo-board-data";
-import { monthTitle, type MonthSlug } from "@/app/lib/sprints";
+import { loadBoardRowsForSprint } from "@/app/lib/post-it-notes-server";
+import { parsePlanningMonthId, planningMonthTitle } from "@/app/lib/sprints";
 
-export function SprintBoardPage({ monthSlug }: { monthSlug: MonthSlug }) {
+export async function SprintBoardPage({ planningMonthId }: { planningMonthId: string }) {
+  const pm = parsePlanningMonthId(planningMonthId);
+  if (!pm) {
+    throw new Error(`Invalid planning month id: ${planningMonthId}`);
+  }
+
+  const initialRows = await loadBoardRowsForSprint(planningMonthId);
+
   return (
     <div className="bg-background text-on-surface font-body-md min-h-screen">
-      <SprintSideNav activeMonth={monthSlug} />
+      <SprintSideNav />
       <main className="ml-[240px] flex min-h-screen flex-col">
-        <SprintBoardHeader title={monthTitle(monthSlug)} />
+        <SprintBoardHeader title={planningMonthTitle(pm)} />
         <section className="p-container-padding flex-1">
-          <KanbanBoardTable key={monthSlug} initialRows={DEMO_BOARD_ROWS} />
-          <NewStoryRowButton />
+          <KanbanBoardTable key={planningMonthId} planningMonthId={planningMonthId} initialRows={initialRows} />
         </section>
       </main>
     </div>

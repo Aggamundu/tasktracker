@@ -3,6 +3,8 @@ export type PostItVariant = "yellow" | "blue" | "pink";
 export type PostItAppearance = "default" | "done-muted" | "done-strike";
 
 export type PostItNote = {
+  /** Set when loaded from or saved to Supabase */
+  id?: string;
   title: string;
   description: string;
   variant: PostItVariant;

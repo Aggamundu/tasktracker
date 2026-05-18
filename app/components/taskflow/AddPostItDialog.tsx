@@ -21,7 +21,7 @@ type AddPostItDialogProps = {
     title: string;
     description: string;
     variant: PostItVariant;
-  }) => void;
+  }) => void | Promise<void>;
 };
 
 export function AddPostItDialog({
@@ -69,15 +69,17 @@ export function AddPostItDialog({
         <form
           className={panelClass}
           onClick={(e) => e.stopPropagation()}
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
             const t = title.trim();
             if (!t) return;
-            onConfirm({
-              title: t,
-              description: description.trim(),
-              variant,
-            });
+            await Promise.resolve(
+              onConfirm({
+                title: t,
+                description: description.trim(),
+                variant,
+              }),
+            );
           }}
         >
           <p className="font-headline-sm text-headline-sm mb-3 font-bold text-on-surface">
@@ -91,7 +93,7 @@ export function AddPostItDialog({
                 type="button"
                 aria-pressed={variant === v}
                 onClick={() => setVariant(v)}
-                className={`flex flex-1 cursor-pointer rounded-md border-2 py-2 text-label-md font-semibold capitalize transition-colors ${
+                className={`flex flex-1 cursor-pointer rounded-md border-2 px-4 py-3 text-label-md font-semibold capitalize ${
                   variant === v
                     ? "border-primary text-primary"
                     : "border-outline-variant/40 text-on-surface-variant hover:border-outline"
@@ -135,13 +137,13 @@ export function AddPostItDialog({
             <button
               type="button"
               onClick={onCancel}
-              className="text-on-surface-variant hover:bg-surface-container-high cursor-pointer rounded-lg px-3 py-2 text-body-md font-medium transition-colors"
+              className="text-on-surface-variant hover:bg-surface-container-high cursor-pointer rounded-lg px-3 py-2 text-body-md font-medium"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-primary-container hover:bg-primary cursor-pointer rounded-lg px-4 py-2 text-body-md font-semibold text-on-primary transition-colors"
+              className="bg-primary-container hover:bg-primary cursor-pointer rounded-lg px-4 py-2 text-body-md font-semibold text-on-primary"
             >
               {submitLabel}
             </button>
